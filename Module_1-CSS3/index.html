@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Local Community Event Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header id="mainHeader">
+    <h2>Welcome to Our Community Events Portal</h2>
+    <p>Stay informed. Stay involved.</p>
+  </header>
+
+  <section class="eventCard">
+    <h3>Upcoming Event: Tree Plantation Drive</h3>
+    <p>Join us in greening our neighborhood. Tools and refreshments will be provided.</p>
+    <a href="#" class="cta-button">Register Now</a>
+  </section>
+
+  <section class="eventCard">
+    <h3>Event Schedule</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Event</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>June 10</td>
+          <td>Tree Plantation</td>
+          <td>Central Park</td>
+        </tr>
+        <tr>
+          <td>June 15</td>
+          <td>Community Cleanup</td>
+          <td>Main Street</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="eventCard">
+    <h3>Volunteer With Us</h3>
+    <form>
+      <label for="name">Name:</label><br/>
+      <input type="text" id="name" name="name" required><br/><br/>
+
+      <label for="email">Email:</label><br/>
+      <input type="email" id="email" name="email" required><br/><br/>
+
+      <label for="interest">Area of Interest:</label><br/>
+      <select id="interest" name="interest">
+        <option value="tree">Tree Plantation</option>
+        <option value="cleanup">Cleanup Drive</option>
+        <option value="awareness">Awareness Campaign</option>
+      </select><br/><br/>
+
+      <input type="submit" value="Submit" class="cta-button">
+    </form>
+  </section>
+
+  <section class="eventCard">
+    <h3>Latest News</h3>
+    <div class="news-article">
+      <p>
+        The recent clean-up campaign saw the participation of over 200 community members. The event successfully removed more than 500 kg of waste from local streets and parks. Volunteers praised the organizers and requested more frequent drives.
+      </p>
+      <p>
+        Meanwhile, the community tree plantation initiative is gaining traction, with over 300 saplings planted this month. Join the effort to green our town and contribute to a healthier environment for all residents.
+      </p>
+    </div>
+  </section>
+
+  <footer class="eventCard">
+    <h3>Quick Links</h3>
+    <nav>
+      <ul>
+        <li><a href="#">Upcoming Events</a></li>
+        <li><a href="#">Volunteer Signup</a></li>
+        <li><a href="#">Contact Organizers</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+</body>
+</html>
