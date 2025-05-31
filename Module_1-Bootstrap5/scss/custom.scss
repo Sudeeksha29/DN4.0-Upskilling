@@ -1,0 +1,6 @@
+// Override Bootstrap variables BEFORE importing bootstrap.scss
+$primary: #ff5722;       // new primary color (orange-ish)
+$border-radius: 1rem;    // increased border radius
+
+// Then import Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
