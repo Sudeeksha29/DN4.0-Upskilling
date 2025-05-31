@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Community Event Portal</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    nav {
+      background: #333;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #welcomeBanner {
+      background-color: #007BFF;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    .highlight {
+      background-color: yellow;
+      font-weight: bold;
+      padding: 0 5px;
+    }
+
+    section {
+      padding: 20px;
+      margin: 10px auto;
+      background: white;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    .event-img {
+      width: 100px;
+      height: 100px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      transition: transform 0.3s;
+    }
+
+    form {
+      background: #f9f9f9;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    form input, form select, form textarea, form button {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    form button {
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    form button:hover {
+      background-color: #218838;
+    }
+
+    #confirmation, #videoMessage {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+    }
+
+    #charCount {
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    hr.yellow-line {
+      border: none;
+      height: 4px;
+      background: yellow;
+      margin: 10px 0;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .form-title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+
+  <script>
+    window.onload = function () {
+      const savedEvent = localStorage.getItem('preferredEvent');
+      if (savedEvent) {
+        document.getElementById('eventType').value = savedEvent;
+      }
+    };
+
+    window.onbeforeunload = function () {
+      const name = document.getElementById('name')?.value;
+      if (name && name.trim() !== "") {
+        return "You have unsaved changes. Are you sure you want to leave?";
+      }
+    };
+
+    function validatePhone(el) {
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!phoneRegex.test(el.value)) {
+        alert("Please enter a valid 10-digit phone number.");
+      }
+    }
+
+    function showFee(select) {
+      const fees = {
+        Music: "$10",
+        Art: "$5",
+        Sports: "$15"
+      };
+      document.getElementById('feeDisplay').textContent = "Fee: " + (fees[select.value] || "N/A");
+      localStorage.setItem('preferredEvent', select.value);
+    }
+
+    function showConfirmation() {
+      document.getElementById('confirmation').textContent = "Thank you for registering!";
+    }
+
+    function enlargeImage(el) {
+      el.style.transform = "scale(1.5)";
+    }
+
+    function countCharacters(el) {
+      document.getElementById('charCount').textContent = "Characters: " + el.value.length;
+    }
+
+    function videoReady() {
+      document.getElementById('videoMessage').textContent = "Video ready to play";
+    }
+
+    function savePreference() {
+      const selected = document.getElementById('eventType').value;
+      if (selected) {
+        localStorage.setItem('preferredEvent', selected);
+        alert(`Preference for "${selected}" saved.`);
+      } else {
+        alert("Please select an event type.");
+      }
+    }
+
+    function findLocation() {
+      const output = document.getElementById('geoDisplay') || document.getElementById('geoOutput');
+      if (!navigator.geolocation) {
+        output.textContent = "Geolocation is not supported.";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          output.innerHTML = `Your coordinates: <span class="highlight">Latitude ${position.coords.latitude.toFixed(4)}, Longitude ${position.coords.longitude.toFixed(4)}</span>`;
+        },
+        error => {
+          output.textContent = "Error: " + error.message;
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
+    function clearPreferences() {
+      localStorage.clear();
+      sessionStorage.clear();
+      alert("Preferences cleared.");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const feedbackBox = document.getElementById('feedback');
+      const charCount = document.getElementById('charCount');
+
+      feedbackBox?.addEventListener('input', function () {
+        charCount.textContent = `${this.value.length} characters typed`;
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="help.html" target="_blank">Help</a>
+  </nav>
+
+  <!-- Welcome Banner -->
+  <div id="welcomeBanner">
+    Welcome, Community Member! <span style="color:red; font-weight:bold;">Special offer!</span>
+  </div>
+
+  <!-- Home Section -->
+  <section id="home">
+    <h2 class="highlight">Welcome to the Event Portal</h2>
+    <p>Explore events, register online, and connect with your community.</p>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events">
+    <h2>Community Event Gallery</h2>
+    <table>
+      <caption>Photos from Past Events</caption>
+      <tr>
+        <td><img src="img1.jpg" alt="Music Event" class="event-img" ondblclick="enlargeImage(this)"></td>
+        <td><img src="img2.jpg" alt="Art Event" class="event-img" ondblclick="enlargeImage(this)"></td>
+        <td><img src="img3.jpg" alt="Sports Event" class="event-img" ondblclick="enlargeImage(this)"></td>
+      </tr>
+    </table>
+
+    <!-- Registration Form -->
+    <h3>Event Registration</h3>
+    <form onsubmit="showConfirmation(); return false;">
+      <label for="regName">Name:</label>
+      <input type="text" id="regName" placeholder="Enter your name" required>
+
+      <label for="regEmail">Email:</label>
+      <input type="email" id="regEmail" placeholder="Enter your email" required>
+
+      <label for="regDate">Event Date:</label>
+      <input type="date" id="regDate" required>
+
+      <label for="regType">Event Type:</label>
+      <select id="regType" required>
+        <option value="">Select an event</option>
+        <option>Food Fair</option>
+        <option>Charity Run</option>
+        <option>Book Fair</option>
+      </select>
+
+      <label for="regMessage">Message:</label>
+      <textarea id="regMessage" placeholder="Enter your message"></textarea>
+
+      <button type="submit" style="background-color: green;">Register</button>
+    </form>
+
+    <!-- Feedback Form -->
+    <h3>Event Feedback</h3>
+    <form id="feedbackForm">
+      <div class="form-title">Event Feedback</div>
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" placeholder="Enter phone number" pattern="[0-9]{10}" onblur="validatePhone(this)">
+
+      <label for="feedbackEvent">Choose Event:</label>
+      <select id="feedbackEvent">
+        <option value="">-- Select --</option>
+        <option>Music</option>
+        <option>Art</option>
+        <option>Sports</option>
+      </select>
+
+      <hr class="yellow-line">
+
+      <label for="feedback">Your Feedback:</label>
+      <textarea id="feedback" rows="4" placeholder="Type your feedback..."></textarea>
+      <div id="charCount">0 characters typed</div>
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+
+    <!-- Promo Video -->
+    <h3>Event Promo Video</h3>
+    <video controls oncanplay="videoReady()">
+      <source src="promo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div id="videoMessage" class="highlight"></div>
+  </section>
+
+  <!-- Inserted Section Starts Here -->
+  <section id="preferencesLocation">
+    <h2>Event Preferences</h2>
+    <label for="eventType">Select Your Preferred Event Type:</label>
+    <select id="eventType" onchange="localStorage.setItem('preferredEvent', this.value)">
+      <option value="">-- Select --</option>
+      <option value="Music">Music</option>
+      <option value="Art">Art</option>
+      <option value="Sports">Sports</option>
+    </select>
+    <br><br>
+    <button onclick="savePreference()">Save Preference</button>
+    <button onclick="clearPreferences()">Clear Preferences</button>
+
+    <hr class="yellow-line">
+
+    <h2>Find Nearby Events</h2>
+    <button onclick="findLocation()">Find Nearby Events</button>
+    <div id="geoDisplay" class="highlight" style="margin-top:10px;"></div>
+  </section>
+  <!-- Inserted Section Ends Here -->
+
+  <!-- Contact Section -->
+  <!-- Contact Section -->
+<section id="contact">
+  <h2>Contact</h2>
+
+  <p>Contact us at: <a href="mailto:events@cityportal.com" style="color: #00cccc;">events@cityportal.com</a></p>
+  <p>Phone: +1 (555) 123-4567</p>
+  <p>Address: 123 Civic Center, Main Street, YourCity</p>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Local Community Event Portal. All rights reserved.
+  </footer>
+</body>
+</html>
