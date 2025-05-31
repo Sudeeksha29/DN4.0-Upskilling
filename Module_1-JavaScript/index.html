@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Community Event Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="help.html" target="_blank">Help</a>
+  </nav>
+
+  <!-- Welcome Banner -->
+  <div id="welcomeBanner">
+    Welcome, Community Member! <span style="color:red; font-weight:bold;">Special offer!</span>
+  </div>
+
+  <!-- Home Section -->
+  <section id="home">
+    <h2 class="highlight">Welcome to the Event Portal</h2>
+    <p>Explore events, register online, and connect with your community.</p>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events">
+    <h2>Community Event Gallery</h2>
+    <div id="eventList" class="event-container"></div>
+
+    <h3>Event Registration</h3>
+    <form id="registrationForm">
+      <input type="text" id="regName" placeholder="Name" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="date" id="regDate" required>
+      <select id="regType" required>
+        <option value="">Select Event Type</option>
+        <option>Music</option>
+        <option>Art</option>
+        <option>Sports</option>
+      </select>
+      <button type="submit">Register</button>
+    </form>
+    <div id="confirmation"></div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: events@cityportal.com</p>
+    <p>Phone: +1 (555) 123-4567</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Local Community Event Portal
+  </footer>
+
+</body>
+</html>
